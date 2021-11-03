@@ -74,6 +74,10 @@ export default function handleUpload(req, res) {
           const buffer = fs.createReadStream(req.file.path + ".zip");
           await new Promise(function (resolve) {
             res.setHeader("Content-Type", "application/zip");
+            res.setHeader(
+              "Content-Disposition",
+              `attachment; filename=${req.file.originalname}.zip`
+            );
             buffer.pipe(res);
             buffer.on("end", resolve);
           });
