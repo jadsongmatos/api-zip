@@ -27,7 +27,7 @@ export default function Home() {
           type: "application/zip",
         });*/
         const link = URL.createObjectURL(blob);
-        setFile(link)
+        setFile(link);
         console.log(link);
         //location.assign(link);
       })
@@ -44,12 +44,18 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <section className="text-center my-5 py-5">
+      <main className="container text-center my-5 py-5">
+        <section>
+          <Image
+            src="/ico-black.svg"
+            alt="API ZIP Logo"
+            width="54px"
+            height="54px"
+          />
           <h1>API ZIP</h1>
           <h2>welcome</h2>
         </section>
-        <section className="container">
+        <section>
           <form onSubmit={registerUser}>
             <div className="mb-3">
               <input
@@ -65,9 +71,7 @@ export default function Home() {
             </div>
           </form>
         </section>
-        <section className="text-center">
-          {file ? <a href={file}>Download</a> : null}
-        </section>
+        <section>{file ? <a href={file}>Download</a> : null}</section>
       </main>
 
       <footer className="footer text-center align-middle my-3">
@@ -75,15 +79,9 @@ export default function Home() {
           href="https://github.com/Slender1808/api-zip"
           target="_blank"
           rel="noopener noreferrer"
-          className="d-inline-flex align-items-center link-dark text-decoration-non"
+          className="link-dark text-decoration-non"
         >
-          <Image
-            src="/ico-black.svg"
-            alt="API ZIP Logo"
-            width="24px"
-            height="24px"
-          />
-          <span className="fs-5 ms-2">github.com/Slender1808/api-zip</span>
+          github.com/Slender1808/api-zip
         </a>
       </footer>
     </div>
