@@ -14,7 +14,7 @@ export const config = {
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     //console.log("here1", file);
-    const dir = "./tmp/" + file.fieldname;
+    const dir = "/tmp/" + file.fieldname;
     fs.mkdirSync(dir, { recursive: true });
     cb(null, dir);
   },
