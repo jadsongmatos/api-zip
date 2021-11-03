@@ -5,8 +5,11 @@ import { useRouter } from "next/router";
 
 export default function Home() {
   const router = useRouter();
-  const [load, setLoad] = useState(false);
+  let [load, setLoad] = useState(false);
+  let [file, setFile] = useState(null);
+
   const registerUser = async (event) => {
+    setFile(null);
     setLoad(true);
     event.preventDefault();
     console.log(event.target[0].files[0]);
@@ -24,8 +27,9 @@ export default function Home() {
           type: "application/zip",
         });*/
         const link = URL.createObjectURL(blob);
+        setFile(link)
         console.log(link);
-        location.assign(link);
+        //location.assign(link);
       })
       .finally(() => {
         setLoad(false);
@@ -60,6 +64,9 @@ export default function Home() {
               </button>
             </div>
           </form>
+        </section>
+        <section className="text-center">
+          {file ? <a href={file}>Download</a> : null}
         </section>
       </main>
 
