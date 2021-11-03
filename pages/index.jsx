@@ -23,13 +23,33 @@ export default function Home() {
     })
       .then(async (response) => {
         const blob = await response.blob();
-        /*const file = new File([blob], event.target[0].files[0].name + ".zip", {
+        //const text = await response.text();
+        console.log(blob);
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = function () {
+          console.log("onloadend",reader)
+          const base64data = reader.result.substring(28);
+          //console.log(base64data);
+
+          //const text = await blob.text();
+          const url = new URL(location.href + "api/decompress/zip");
+
+          //console.log(escape(text));
+          url.searchParams.append("blob", base64data);
+          console.log(url);
+          /*const file = new File([blob], event.target[0].files[0].name + ".zip", {
           type: "application/zip",
         });*/
-        const link = URL.createObjectURL(blob);
-        setFile(link);
-        console.log(link);
-        //location.assign(link);
+          //const cmp = new URLSearchParams(url.search);
+          //console.log(text == unescape(cmp.get("blob")));
+          console.log(url.search);
+
+          const link = URL.createObjectURL(blob);
+          setFile(link);
+          console.log(link);
+          //location.assign(link);
+        };
       })
       .finally(() => {
         setLoad(false);
@@ -71,17 +91,28 @@ export default function Home() {
             </div>
           </form>
         </section>
-        <section>{file ? <a href={file}>Download</a> : null}</section>
+        {load == true ? (
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        ) : null}
+        <section>
+          {file ? (
+            <a href={file}>
+              <h5>Download</h5>
+            </a>
+          ) : null}
+        </section>
       </main>
 
-      <footer className="footer text-center align-middle my-3">
+      <footer className="footer text-center align-middle my-3 source code">
         <a
           href="https://github.com/Slender1808/api-zip"
           target="_blank"
           rel="noopener noreferrer"
           className="link-dark text-decoration-non"
         >
-          github.com/Slender1808/api-zip
+          Source code
         </a>
       </footer>
     </div>
