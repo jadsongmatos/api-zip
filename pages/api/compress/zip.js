@@ -61,12 +61,14 @@ export default function handleUpload(req, res) {
       });
 
       output.on("close", async () => {
+        /*  delete the uploaded files
         try {
           console.log("unlinkSync file", req.file.path);
           fs.unlinkSync(req.file.path);
         } catch (error) {
           console.log("unlinkSync ", error);
         }
+        */
 
         try {
           const buffer = fs.createReadStream(req.file.path + ".zip");
@@ -79,6 +81,7 @@ export default function handleUpload(req, res) {
           res.status(400).json(e);
         }
 
+        /* delete the compressed file
         try {
           console.log(
             "unlinkSync zip",
@@ -89,6 +92,7 @@ export default function handleUpload(req, res) {
         } catch (error) {
           console.log("unlinkSync zip", error);
         }
+        */
       });
 
       output.on("end", () => {
