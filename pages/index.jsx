@@ -1,7 +1,37 @@
 import Head from "next/head";
 import Image from "next/image";
+import { useState } from "react";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter();
+  const [load, setLoad] = useState(false);
+  const registerUser = async (event) => {
+    setLoad(true);
+    event.preventDefault();
+    console.log(event.target[0].files[0]);
+
+    let data = new FormData();
+    data.append("uploaded_file", event.target[0].files[0]);
+
+    fetch("/api/compress/zip", {
+      body: data,
+      method: "POST",
+    })
+      .then(async (response) => {
+        const blob = await response.blob();
+        /*const file = new File([blob], event.target[0].files[0].name + ".zip", {
+          type: "application/zip",
+        });*/
+        const link = URL.createObjectURL(blob);
+        console.log(link);
+        location.assign(link);
+      })
+      .finally(() => {
+        setLoad(false);
+      });
+  };
+
   return (
     <div>
       <Head>
@@ -16,11 +46,7 @@ export default function Home() {
           <h2>welcome</h2>
         </section>
         <section className="container">
-          <form
-            action="/api/compress/zip"
-            method="post"
-            encType="multipart/form-data"
-          >
+          <form onSubmit={registerUser}>
             <div className="mb-3">
               <input
                 className="form-control"
