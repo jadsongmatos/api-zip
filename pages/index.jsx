@@ -1,7 +1,11 @@
 import Head from "next/head";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+
 import { useState } from "react";
 import { useRouter } from "next/router";
+
+const Ads = dynamic(() => import("../lib/adaround"), { ssr: false });
 
 export default function Home() {
   const router = useRouter();
@@ -28,7 +32,7 @@ export default function Home() {
         const reader = new FileReader();
         reader.readAsDataURL(blob);
         reader.onloadend = function () {
-          console.log("onloadend",reader)
+          console.log("onloadend", reader);
           const base64data = reader.result.substring(28);
           //console.log(base64data);
 
@@ -104,6 +108,8 @@ export default function Home() {
           ) : null}
         </section>
       </main>
+      <Ads/>
+      
 
       <footer className="footer text-center align-middle my-3 source code">
         <a
