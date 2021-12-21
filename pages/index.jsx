@@ -111,7 +111,7 @@ export default function Home() {
       <Ads/>
       
 
-      <footer className="footer text-center align-middle my-3 source code">
+      <footer className="footer text-center align-middle my-3 source code fixed-bottom">
         <a
           href="https://github.com/Slender1808/api-zip"
           target="_blank"
